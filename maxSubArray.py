@@ -112,16 +112,15 @@ def maxSubArray3(array):
 
 
 def maxSubArray4(array):
-	def a4(array):
 	n = len(array)
-	maxSum = -sys.maxInt
-	endingHereSum -sys.maxInt
+	maxSum = -sys.maxint
+	endingHereSum = -sys.maxint
 	
 	i = 0
 	while i < n:
-		endingHereSum = i
+		endingHereHigh = i
 		if endingHereSum > 0:
-			endingHereSum = endingHereSum + array[j]
+			endingHereSum = endingHereSum + array[i]
 		else:
 			endingHereLow = i
 			endingHereSum = array[i]
@@ -132,4 +131,4 @@ def maxSubArray4(array):
 		
 		i = i + 1
 	
-	return (low, high, maxSum)
+	return (maxSum, array[low:high + 1])
