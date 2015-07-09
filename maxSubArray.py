@@ -37,30 +37,34 @@ def maxSubArray1(array):
 def maxSubArray2(array):
 	
 	end = len(array)
-	maxSum = 0
+	maxSum = -1
 	start = 0
 	
 	# Adjusts the starting index of the sub-array
-	for j in range(len(array) - 1):
+	for j in range(len(array)):
 		
 		i = j
 		tempSum = 0
 		
 		# Adds up elements starting with j
 		# as long as this increases the sum.
-		while i < len(array) - 1:
+		while i < len(array):
 			tempSum = tempSum + array[i]
-			if tempSum > maxSum:
+			if tempSum > maxSum and array[j] != 0:
 				maxSum = tempSum
 				start = j
 				end = i					
 			i = i + 1
 	
-	return maxSum, array[start:end + 1]
+	subArray = array[start:end + 1]
+	
+	return maxSum, subArray
 		
 		
 
 
+	
+#skjasdkasdasdaksdhaskjdhaksjdhaksjdhakjs
 def subroutine(array, low, mid, high):
 	maxLeft = mid
 	maxRight = mid
@@ -77,7 +81,7 @@ def subroutine(array, low, mid, high):
 	rightSum = -sys.maxint
 	sum = 0
 	j = mid + 1
-	while j < high:
+	while j <= high:
 		sum = sum + array[j]
 		if sum > rightSum:
 			rightSum = sum
@@ -89,9 +93,9 @@ def subroutine(array, low, mid, high):
 	
 def divideAndConquer(array, low, high):
 	if high == low:
-		return (array[low - 1], low, high)
+		return (array[low], low, high)
 	else:
-		mid = int(math.floor((low+high)/2))
+		mid = int((low+high)/2)
 		(leftSum, leftLow, leftHigh) = divideAndConquer(array, low, mid)
 		(rightSum, rightLow, rightHigh) = divideAndConquer(array, mid+1, high)
 		(crossSum, crossLow, crossHigh) = subroutine(array, low, mid, high)
@@ -105,10 +109,10 @@ def divideAndConquer(array, low, high):
 
 def maxSubArray3(array):
 	low = 0
-	high = len(array)
+	high = len(array) - 1
 	(maxSum, start, end) = divideAndConquer(array, low, high)
-	return maxSum, array[start:end + 1]
-
+	return maxSum, array[start:end + 1]	
+#skjasdkasdasdaksdhaskjdhaksjdhaksjdhakjs
 
 
 def maxSubArray4(array):
