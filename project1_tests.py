@@ -19,7 +19,7 @@ def testArrayFunctions(array, algorithms):
 
 
 
-testArrays = open(".\MSS_TestProblems.txt", 'r')
+testArrays = open(".\MSS_TestProblemsOLD.txt", 'r')
 algorithms = [maxSubArray.maxSubArray1, \
 	maxSubArray.maxSubArray2, \
 	maxSubArray.maxSubArray3, \
