@@ -62,6 +62,8 @@ def maxSubArray2(array):
 
 
 def subroutine(array, low, mid, high):
+	maxLeft = mid
+	maxRight = mid
 	leftSum = -sys.maxint
 	sum = 0 
 	i = mid
@@ -71,6 +73,7 @@ def subroutine(array, low, mid, high):
 			leftSum = sum
 			maxLeft  = i
 		i = i - 1
+		
 	rightSum = -sys.maxint
 	sum = 0
 	j = mid + 1
@@ -80,24 +83,22 @@ def subroutine(array, low, mid, high):
 			rightSum = sum
 			maxRight = j
 		j = j + 1
-	return (maxLeft, maxRight, leftSum + rightSum)
+	return (leftSum + rightSum, maxLeft, maxRight)
 	
 		
 	
 def divideAndConquer(array, low, high):
-	# print array;
-	
 	if high == low:
-		return (array[low], high, low)
+		return (array[low - 1], low, high)
 	else:
 		mid = int(math.floor((low+high)/2))
 		(leftSum, leftLow, leftHigh) = divideAndConquer(array, low, mid)
 		(rightSum, rightLow, rightHigh) = divideAndConquer(array, mid+1, high)
 		(crossSum, crossLow, crossHigh) = subroutine(array, low, mid, high)
 	
-		if leftSum > rightSum and leftSum > crossSum:
+		if leftSum >= rightSum and leftSum >= crossSum:
 			return 	(leftSum, leftLow, leftHigh)
-		elif rightSum > leftSum and rightSum > crossSum:
+		elif rightSum >= leftSum and rightSum >= crossSum:
 			return (rightSum, rightLow, rightHigh) 
 		else:
 			return (crossSum, crossLow, crossHigh) 
