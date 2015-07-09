@@ -1,31 +1,36 @@
 import maxSubArray
-
-
 	
 def testArrayFunctions(array, algorithms):
 	results = []
 	i = 0
 	for algorithm in algorithms:
 		results.append(algorithm(array))
-		print "Algorithm ", i + 1
-		print "Maximum Sum: " + str(results[i][0])
-		print "Sub-array: " +  str(results[i][1]) + "\n"
-			
-		assert(results[i][0] == 187)
-		assert(results[i][1] == [59, 26, -53, 58, 97])
-
+		maxSum = results[i][0]
+		subArray = results[i][1]
+		print str(algorithm)[1:-14]
+		print "Maximum Sum: " + str(maxSum)
+		print "Sub-array: " +  str(subArray) + "\n"
 		
+		if i > 0:
+			assert(results[i] == results[i - 1])
 		
 		i = i + 1
 
 
 
-array = [31, -41, 59, 26, -53, 58, 97, -93, -23, 84]
 
+testArrays = open(".\MSS_TestProblems.txt", 'r')
 algorithms = [maxSubArray.maxSubArray1, \
 	maxSubArray.maxSubArray2, \
 	maxSubArray.maxSubArray3, \
 	maxSubArray.maxSubArray4]
 
-		
-testArrayFunctions(array, algorithms)
+
+for array in testArrays:
+	if array[0] == '#' or array[0] == '\n':
+		continue
+	testArrayFunctions(eval(array), algorithms)
+	print
+
+
+testArrays.close()

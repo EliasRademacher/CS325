@@ -37,26 +37,28 @@ def maxSubArray1(array):
 def maxSubArray2(array):
 	
 	end = len(array)
-	maxSum = 0
+	maxSum = -1
 	start = 0
 	
 	# Adjusts the starting index of the sub-array
-	for j in range(len(array) - 1):
+	for j in range(len(array)):
 		
 		i = j
 		tempSum = 0
 		
 		# Adds up elements starting with j
 		# as long as this increases the sum.
-		while i < len(array) - 1:
+		while i < len(array):
 			tempSum = tempSum + array[i]
-			if tempSum > maxSum:
+			if tempSum > maxSum and array[j] != 0:
 				maxSum = tempSum
 				start = j
 				end = i					
 			i = i + 1
 	
-	return maxSum, array[start:end + 1]
+	subArray = array[start:end + 1]
+	
+	return maxSum, subArray
 		
 		
 
@@ -71,7 +73,7 @@ def subroutine(array, low, mid, high):
 		sum = sum + array[i]
 		if sum > leftSum:
 			leftSum = sum
-			maxLeft  = i
+			maxLeft = i
 		i = i - 1
 		
 	rightSum = -sys.maxint
@@ -89,6 +91,9 @@ def subroutine(array, low, mid, high):
 	
 def divideAndConquer(array, low, high):
 	if high == low:
+		print "*************"
+		print "low: ", low
+		print "*************"
 		return (array[low - 1], low, high)
 	else:
 		mid = int(math.floor((low+high)/2))
@@ -103,12 +108,80 @@ def divideAndConquer(array, low, high):
 		else:
 			return (crossSum, crossLow, crossHigh) 
 
+			
+			
+
+
+	
+	
+	
+	
+	
+	
+# def max_subarray(array, start, end):
+  # if start == end:
+    # return array[start]
+  # else:
+    # middle = (start + end) / 2
+    # return max(max_subarray(array, start, middle), max_subarray(array, middle + 1, end), max_crossover(array, start, middle, end))
+	
+	
+# def max_crossover(array, start, middle, end):
+	# rightSum = middle
+	# currentLeftSum = 0
+	# leftSum = -sys.maxint - 1
+	# currentRightSum = 0
+	# right_sum =-sys.maxint - 1
+	# for i in range(middle, start, -1):
+		# currentLeftSum = array[i]
+		# if currentLeftSum > leftSum:
+			# leftSum = currentLeftSum
+	# for i in range(middle, end):
+		# currentRightSum = currentRightSum + array[i]
+		# if currentRightSum > rightSum:
+			# rightSum = currentRightSum
+	# return leftSum + rightSum	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 def maxSubArray3(array):
 	low = 0
-	high = len(array)
-	(maxSum, start, end) = divideAndConquer(array, low, high)
-	return maxSum, array[start:end + 1]
-
+	high = len(array) - 1
+		
+	
+	(maxSum, start, end) = divideAndConquer(array, low, high)	
+	subArray = array[start:end + 1]	
+	
+	for i in range(len(subArray)):
+		if subArray[i] != 0:
+			break
+		elif subArray[i] == 0:
+			del(subArray[i])
+	
+	return maxSum, subArray
+	
+	
+	
 
 
 def maxSubArray4(array):
