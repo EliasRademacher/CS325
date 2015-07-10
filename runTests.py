@@ -18,7 +18,7 @@ def testArrayFunctions(array, algorithms):
 		i = i + 1
 
 
-testArrays = open(".\MSS_TestProblemsNEW.txt", 'r')
+testArrays = open(".\MSS_TestProblems.txt", 'r')
 sys.stdout = open(".\MSS_Results.txt", "w")
 
 algorithms = [maxSubArray.maxSubArray1, \
