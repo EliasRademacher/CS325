@@ -1,5 +1,6 @@
 import random
 import sys
+import math
 
 def isValidArray(array):
 	for e in array:
@@ -8,7 +9,15 @@ def isValidArray(array):
 	return False
 
 
-def generateArray(n):
+def generateArrays(min, max):
+
+	n = [min]
+	i = 0
+	while n[i] * 2 < max:
+		n.append(n[i] * 2)
+		i = i + 1
+
+
 	arrays = []
 	for e in n:
 		array = random.sample(range(-10*e, 10*e), e)
@@ -16,17 +25,3 @@ def generateArray(n):
 			array = random.sample(range(-1000, 1000), e)
 		arrays.append(array)	
 	return arrays
-
-	
-	
-n = [10, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000]		
-f = open("./randomArrays.txt", "w")
-arrays = generateArray(n)
-count = 0
-for a in arrays:
-	print "array: " + str(count)
-	print a
-	f.write(str(a))
-	f.write("\n")
-	count = count + 1
-f.close()
