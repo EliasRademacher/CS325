@@ -20,11 +20,13 @@ def maxSubArray1(array):
 			
 			# Calculate all sums of all subarrays of length subArrayLength
 			for j in range(subArrayLength):
-					sum = sum + array[j + i]
+				sum = sum + array[j + i]
+			
 			if sum > maxSum:
 				maxSum = sum
 				start = i
 				end = j + i
+					
 			i = i + 1
 				
 		subArrayLength = subArrayLength + 1
@@ -32,8 +34,7 @@ def maxSubArray1(array):
 	return maxSum, array[start:end + 1]
 
 	
-		
-	
+			
 def maxSubArray2(array):
 	
 	end = len(array)
@@ -54,20 +55,16 @@ def maxSubArray2(array):
 				maxSum = tempSum
 				start = j
 				end = i					
+			
 			i = i + 1
 	
 	subArray = array[start:end + 1]
-	
 	return maxSum, subArray
 		
-		
-
 
 	
-#skjasdkasdasdaksdhaskjdhaksjdhaksjdhakjs
 def subroutine(array, low, mid, high):
 	maxLeft = mid
-	maxRight = mid
 	leftSum = -sys.maxint
 	sum = 0 
 	i = mid
@@ -78,6 +75,7 @@ def subroutine(array, low, mid, high):
 			maxLeft  = i
 		i = i - 1
 		
+	maxRight = mid
 	rightSum = -sys.maxint
 	sum = 0
 	j = mid + 1
@@ -87,6 +85,7 @@ def subroutine(array, low, mid, high):
 			rightSum = sum
 			maxRight = j
 		j = j + 1
+		
 	return (leftSum + rightSum, maxLeft, maxRight)
 	
 		
@@ -107,14 +106,16 @@ def divideAndConquer(array, low, high):
 		else:
 			return (crossSum, crossLow, crossHigh) 
 
+			
+			
 def maxSubArray3(array):
 	low = 0
 	high = len(array) - 1
 	(maxSum, start, end) = divideAndConquer(array, low, high)
 	return maxSum, array[start:end + 1]	
-#skjasdkasdasdaksdhaskjdhaksjdhaksjdhakjs
 
 
+	
 def maxSubArray4(array):
 	n = len(array)
 	maxSum = -sys.maxint
