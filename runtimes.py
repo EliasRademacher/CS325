@@ -30,7 +30,7 @@ for array in arrays:
 	for algorithm in algorithms:
 		stmt = 'maxSubArray.' + str(algorithm).split()[1] + '(' + str(array) + ')'
 		setup = "from __main__ import maxSubArray"
-		results.write("\t\t\t{:f}".format(timeit.timeit(stmt, setup, number=REPEAT)))
+		results.write("\t\t\t" + str(timeit.timeit(stmt, setup, number=REPEAT)))
 	results.write("\n")
 
 results.close()
