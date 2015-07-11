@@ -17,3 +17,7 @@ TO RUN THE PROGRAM:
 TO VIEW THE OUTPUT:
 	open the file that was created called "MSS_Results.txt"
 
+
+To run the timing code:
+- run runtimes.py
+
