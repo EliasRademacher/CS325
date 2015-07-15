@@ -1,7 +1,12 @@
-greedy(v, a):
-	change = [] * len(v)
+
+def greedy(v, a):
+	change = [0] * len(v)
+	temp = 0
 	for e in reversed(v):
-		while((sum(change) + e) < v):
-			#index is wrong because of reversed list __maybe__
-			change[v.index(e)] = change[v.index(e)] + e
+		while((temp + e) <= a):
+			temp += e
+			change[v.index(e)] = change[v.index(e)] + 1
 	return change
+	
+change = greedy([1, 3, 7, 12], 29)
+print "change: ", change
