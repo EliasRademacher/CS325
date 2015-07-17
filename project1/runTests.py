@@ -1,5 +1,5 @@
 import maxSubArray
-import sys 
+import sys
 
 def testArrayFunctions(array, algorithms):
 	results = []
@@ -18,8 +18,8 @@ def testArrayFunctions(array, algorithms):
 		i = i + 1
 
 
-testArrays = open(".\MSS_TestProblems.txt", 'r')
-sys.stdout = open(".\MSS_Results.txt", "w")
+testArrays = open("MSS_TestProblems.txt", 'r')
+sys.stdout = open("MSS_Results.txt", "w")
 
 algorithms = [maxSubArray.maxSubArray1, \
 	maxSubArray.maxSubArray2, \
@@ -28,9 +28,21 @@ algorithms = [maxSubArray.maxSubArray1, \
 
 
 for array in testArrays:
-	if array[0] == '#' or array[0] == '\n':
-		continue
-	testArrayFunctions(eval(array), algorithms)
-	print
+	if array == '' or array[0] == '#' or array[0] == '\n':
+	    	continue
+	
+	array = array.rstrip('\n')
+	array = array.rstrip('\r')
+	array = array.rstrip(']')
+	array = array.lstrip('[')
+	array = array.split(',') 
+
+	
+	if array and (array != ['']): 
+		
+	    	array = map(int, array)
+		print array
+ 		testArrayFunctions(array, algorithms)
+		print
 
 testArrays.close()
