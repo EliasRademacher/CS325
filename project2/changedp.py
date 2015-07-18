@@ -31,8 +31,6 @@ def changedp(value, denominations, memoizedVals):
 	return coins
 	
 	
-
-# def wrapDP(value, denominations):
-value = 31
-memoizedVals = [False] * (value+1)
-print changedp(value, [1, 3, 7, 12], memoizedVals)	
+def wrapDP(value, denominations):
+	memoizedVals = [False] * (value+1)
+	return changedp(value, denominations, memoizedVals)

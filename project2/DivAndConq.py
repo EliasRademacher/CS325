@@ -1,5 +1,3 @@
-import sys
-
 def slowChange(value, denominations):
 	coins = [0] * len(denominations)  #initialize to all zeros
 	
@@ -18,6 +16,3 @@ def slowChange(value, denominations):
 			coins = [sum(x) for x in zip(coins1, coins2)]
 			
 	return coins
-	
-	
-print slowChange(25, [1, 2, 4, 8])
