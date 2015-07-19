@@ -17,7 +17,7 @@ money = open(filename, 'r')
 
 #Redirect to a stupid name catted from in on command line
 filename = filename[:-4]
-sys.stdout = open("change" + filename + ".txt", "w+")
+sys.stdout = open(filename + "change.txt", "w+")
 
 amount = [0]
 
