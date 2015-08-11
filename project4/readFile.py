@@ -3,16 +3,15 @@ import math
 from greedyTSP import greedyTsp
 
 if(len(sys.argv)  < 2):
-	print "Did not specify filename.\nExiting"
-	exit(0)
-	
-filename = sys.argv[1].strip("\\")
-filenameExt = filename[-4:]
+	filename = "test-input-1.txt"
 
-if(filenameExt not in ".txt"):
-	print "Invalid filetype.\nExiting."
-	exit(0)
-	
+else:
+	filename = sys.argv[1].strip("\\")
+	if(filename[-4:] != ".txt"):
+		print "Invalid filetype.\nExiting."
+		exit(0)
+
+
 inputFile = open(filename, 'r')
 
 #list of lists. Each sublist is [id, xCoord, yCoord]
