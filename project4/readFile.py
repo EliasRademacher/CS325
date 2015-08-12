@@ -2,6 +2,23 @@ import sys
 import math
 from greedyTSP import greedyTsp
 
+def visitCityPath(dictionary, list):
+	i = 0
+	distance = 0
+	while i < len(list)-1:
+		if (list[i], list[i+1]) in dictionary:
+			distance = distance + dictionary[(list[i], list[i+1])]
+		else:
+			distance = distance + dictionary[(list[i+1], list[i])]
+		i += 1
+
+	if (list[0], list[-1]) in dictionary:
+		distance = distance + dictionary[(list[0], list[-1])]
+	else:
+		distance = distance + dictionary[(list[-1], list[0])]
+	
+	print distance
+
 if(len(sys.argv)  < 2):
 	filename = "test-input-1.txt"
 
@@ -10,9 +27,10 @@ else:
 	if(filename[-4:] != ".txt"):
 		print "Invalid filetype.\nExiting."
 		exit(0)
-
-
+	
+	
 inputFile = open(filename, 'r')
+listFile = open(sys.argv[2])
 
 #list of lists. Each sublist is [id, xCoord, yCoord]
 fullMap = []
@@ -30,6 +48,11 @@ while True:
 	
 	fullMap.append(values)
 
+solnList = []	
+for line in listFile:
+	solnList.append(int(line))
+solnList.pop(0)
+	
 #number of 'cities'
 n = len(fullMap)
 	
@@ -49,6 +72,10 @@ print
 
 
 #call TSP func with dictionary
-greedyTsp(lengthDictionary, n)
-
+#greedyTsp(lengthDictionary, n)
+print solnList
+print
+visitCityPath(lengthDictionary, solnList)
+	
+		
 	
