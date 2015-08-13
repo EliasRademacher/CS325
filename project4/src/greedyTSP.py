@@ -87,7 +87,7 @@ def findRoute(startCity, numCities, cities, minCost):
 	##Route back to start node	
 	endLen = getLength(cities, startCity, currentCity)
 	totalLen += endLen
-	##Her code is stupid and doesn't put the start node at the end
+	##Her code doesn't put the start node at the end
 	#route.append((startCity))
 		
 	return route, totalLen
