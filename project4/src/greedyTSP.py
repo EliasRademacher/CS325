@@ -25,7 +25,6 @@ def multiDataTransfer(alternator, minCost, route, q):
 	out.write(str(minCost) + "\n")
 	print "minCost: " + str(minCost)
 	for e in route:
-		print e
 		out.write(str(e) + "\n")
 	
 	q.put(filename)
@@ -43,17 +42,15 @@ def greedyTsp(cities, numCities, q):
 		results = findRoute(startingCity, numCities, cities, minCost)	
 		if(results != None):
 			totalCost = results[1]
-			print "total cost: " + str(totalCost)
 			if(totalCost < minCost):
 				minCost = totalCost
 				shortestRoute = results[0]
-				
 				if(numCities > settings.MAX_TIMED_CITIES):
 					##Write data to file to be accessed by parent.
 					##If alternator is True, write to TEMP1, else to TEMP2 
 					alternator = multiDataTransfer(alternator, minCost, shortestRoute, q)
 	
-	##If there is time, just pass data now
+	##If there is time, just pass data once
 	singleDataTransfer(minCost, shortestRoute, q)
 ##END 'def greedyTsp()'
 
@@ -90,7 +87,8 @@ def findRoute(startCity, numCities, cities, minCost):
 	##Route back to start node	
 	endLen = getLength(cities, startCity, currentCity)
 	totalLen += endLen
-	route.append((startCity))
+	##Her code is stupid and doesn't put the start node at the end
+	#route.append((startCity))
 		
 	return route, totalLen
 	

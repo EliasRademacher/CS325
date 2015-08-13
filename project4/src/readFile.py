@@ -1,6 +1,6 @@
 import sys
 import math
-from greedyTSP import greedyTsp
+from greedyTSP import greedyTsp, getLength
 import time
 import Queue
 import multiprocessing
@@ -8,22 +8,22 @@ import os
 from settings import *
 
 
-def visitCityPath(dictionary, list):
-	i = 0
-	distance = 0
-	while i < len(list)-1:
-		if (list[i], list[i+1]) in dictionary:
-			distance = distance + dictionary[(list[i], list[i+1])]
-		else:
-			distance = distance + dictionary[(list[i+1], list[i])]
-		i += 1
-
-	if (list[0], list[-1]) in dictionary:
-		distance = distance + dictionary[(list[0], list[-1])]
-	else:
-		distance = distance + dictionary[(list[-1], list[0])]
+def visitCityPath(fullMap, solnList):
+	totalLen = solnList[0]
+	calcLen = 0
+	i = 1
+	while i < (len(solnList) - 1):
+		edgeCost = getLength(fullMap, solnList[i], solnList[i+1])
+		calcLen +=  edgeCost
+		i += 1 
+	calcLen += getLength(fullMap, solnList[1], solnList[-1])
 	
-	print distance
+	if calcLen != totalLen:
+		print "\nERROR BAD LENGTHS\n"
+		print "actual: " + str(calcLen)
+		print "found: " + str(totalLen)
+	else:
+		print "checksum succeeded!"
 ##END FUNC
 
 
@@ -39,6 +39,12 @@ else:
 	if(filename[-4:] != ".txt"):
 		print "\n*** Invalid filetype.\nExiting ***\n"
 		exit(0)
+
+kill = True
+if(len(sys.argv) == 3):
+	if sys.argv[2] == "nokill":
+		print "NOKILL RECEIVED"
+		kill = False
 	
 	
 inputFile = open(filename, 'r')
@@ -70,12 +76,16 @@ if __name__ == '__main__':
 		name='greedyTsp', args=(fullMap, n, q))
 	p.start()
 
-	while(p.is_alive()) and (time.time() < startTime + 295):
-	    	continue	
+	if(kill):
+		while(p.is_alive() and (time.time() < startTime + TIMEOUT)):
+			continue	
+	else:
+		while(p.is_alive()):
+			continue
 	
 	p.terminate()
 	print "\nTerminated...\n"
-	
+	endTime = time.time() - startTime
 	if(q.empty()):
 		print "Queue empty, blocking"
 	
@@ -92,13 +102,20 @@ if __name__ == '__main__':
 	if(os.path.isfile(outFile)):
 		os.remove(outFile)
 		
-	print "tempResults: " + tempResults
 	os.rename(tempResults, outFile)
 	
-	print "done"
+	print "done in " + str(endTime) + " seconds"
 	
+	print "\nTESTING SOLN\n"
+	solnList = []
+	solnFile = open(outFile, "r") 
+	for line in solnFile:
+		solnList.append(int(line))
+	visitCityPath(fullMap, solnList)
+	
+	
+	##Cleanup
 	if(os.path.isfile(TEMP1)):
 		os.remove(TEMP1)
 	if(os.path.isfile(TEMP2)):
-		os.remove(TEMP2)
-	
+		os.remove(TEMP2)	
