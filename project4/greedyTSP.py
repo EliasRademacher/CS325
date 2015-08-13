@@ -1,25 +1,28 @@
 import sys
+import math
 
-def greedyTsp(dictionary, numCities):
-	cheapestRoute = []
+
+def greedyTsp(cities, numCities, q):
 	minCost = sys.maxint
-	
+	cheapesRoute = []
 	for startingCity in range(numCities):
-		results = findRoute(startingCity, numCities, dictionary)
-		
-		
-		totalCost = results[1]
-		
-		if(totalCost < minCost):
-			minCost = totalCost
-			cheapestRoute = results[0]
-	
-	print "\nSHORTEST ROUTE: " + str(minCost) 
-	for route in cheapestRoute:
-		print "id: " + str(route[0]) + ", distance: " + str(route[1])
-	
+		print str(startingCity)
+		results = findRoute(startingCity, numCities, cities, minCost)	
+		if(results != None):
+			totalCost = results[1]
+			if(totalCost < minCost):
+		    		minCost = totalCost
+				if(not q.empty()):
+					q.get()	
+					q.get()			
+				q.put(results[0])
+				q.put(minCost)
+	return
+##END 'def greedyTsp()'
 
-def findRoute(startCity, numCities, dictionary):
+
+
+def findRoute(startCity, numCities, cities, minCost):
 	
 	citiesToCheck = nList(startCity, numCities)
 	currentCity = startCity
@@ -28,42 +31,30 @@ def findRoute(startCity, numCities, dictionary):
 	count = 0
 	
 	while count < numCities - 1:
-#		print "current node: " + str(currentCity)
-#		print "citiesToCheck: " + str(citiesToCheck)
 		shortest = sys.maxint
 		closestCityId = -1
 		for id in citiesToCheck:
-			if((currentCity, id) in dictionary):
-				length = dictionary[(currentCity, id)]
-			else:
-				length = dictionary[(id, currentCity)]
-			
-#			print "node:" + str(id) + " length: " + str(length)
-			
+			length = getLength(cities, id, currentCity)
 			if(length < shortest):
-				shortest = length
-				totalLen += shortest
+				shortest = length		
 				closestCityId = id
 		
-#		print "picked node: " + str(closestCityId) + " at len: " + str(shortest) + "\n"
+		totalLen += shortest
+
+		#prematurely kill if cost is too high
+		if(totalLen > minCost):
+			return None
+		
 		currentCity = closestCityId
 		route.append((currentCity, shortest))
 		citiesToCheck.remove(currentCity)
 		count += 1
 
-	#Route back to start node	
-	if(start, closestCityId) in dictionary:
-		endLen = dictionary[(start, closestCityId)]
-		route.append((start, endLen))
-		totalLen += endLen
-	else:
-		endLen = dictionary[(closestCityId, start)]
-		route.append((start, endLen))
-		totalLen += endLen
+	##Route back to start node	
+	endLen = getLength(cities, startCity, currentCity)
+	totalLen += endLen
+	route.append((startCity, endLen))
 		
-	# for r in route:
-		# print "City Id: " + str(r[0]) + ", distance: " + str(r[1])
-	# print "*****Total Length*****\n" + str(totalLen) + "\n*****Total Length*****"
 	return route, totalLen
 	
 
@@ -74,4 +65,13 @@ def nList(start, n):
 		if(i != start):
 			list.append(i)
 	return list
+
+	
+def getLength(cities, city1, city2):
+	city1x = cities[city1][1]
+	city1y = cities[city1][2]
+	city2x = cities[city2][1]
+	city2y = cities[city2][2]
+	return int(round(math.sqrt(((city1x - city2x)**2) + ((city1y - city2y)**2))))
+
 	
