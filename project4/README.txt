@@ -28,4 +28,6 @@ Running instructions:
 NOTE:
  - This program is compatible with Windows and Linux systems.
  - Code must be kept in file called 'src'
-
+ - The program will timeout after 5 minutes and produce the best solution that it
+	has found, unless it hasn't found one. To prevent the timeout,
+	give a third command line argument "nokill" 
