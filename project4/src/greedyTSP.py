@@ -11,6 +11,8 @@ def singleDataTransfer(minCost, route, q):
 	print "minCost: " + str(minCost)
 	for e in route:
 		out.write(str(e) + "\n")
+	if(not q.empty()):
+		q.get()
 	q.put(TEMP1)
 	out.close
 	
@@ -26,7 +28,8 @@ def multiDataTransfer(alternator, minCost, route, q):
 	print "minCost: " + str(minCost)
 	for e in route:
 		out.write(str(e) + "\n")
-	
+	if(not q.empty()):
+		q.get()
 	q.put(filename)
 	out.close
 	return False if alternator else True
@@ -51,7 +54,8 @@ def greedyTsp(cities, numCities, q):
 					alternator = multiDataTransfer(alternator, minCost, shortestRoute, q)
 	
 	##If there is time, just pass data once
-	singleDataTransfer(minCost, shortestRoute, q)
+	if(numCities <= settings.MAX_TIMED_CITIES):
+		singleDataTransfer(minCost, shortestRoute, q)
 ##END 'def greedyTsp()'
 
 

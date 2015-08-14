@@ -110,6 +110,9 @@ if __name__ == '__main__':
 	os.rename(tempResults, outFile)
 	
 	print "done in " + str(endTime) + " seconds"
+	timeFile = open(filename + ".time", "w")
+	timeFile.write("Time elapsed: " + str(endTime))
+	close(timeFile)
 	
 	print "\nTESTING SOLN\n"
 	solnList = []
