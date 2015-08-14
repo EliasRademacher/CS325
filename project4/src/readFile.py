@@ -114,12 +114,12 @@ if __name__ == '__main__':
 	timeFile.write("Time elapsed: " + str(endTime))
 	timeFile.close()
 	
-	print "\nTESTING SOLN\n"
-	solnList = []
-	solnFile = open(outFile, "r") 
-	for line in solnFile:
-		solnList.append(int(line))
-	visitCityPath(fullMap, solnList)
+	# print "\nTESTING SOLN\n"
+	# solnList = []
+	# solnFile = open(outFile, "r") 
+	# for line in solnFile:
+		# solnList.append(int(line))
+	# visitCityPath(fullMap, solnList)
 	
 	cleanup()
 	
