@@ -101,10 +101,18 @@ if __name__ == '__main__':
 	outFile = filename + ".tour"
 	if(os.path.isfile(outFile)):
 		os.remove(outFile)
+	
+	if(tempResults == None):
+		print "\nNo solution found.\n"
+		cleanup()
+		exit(0)
 		
 	os.rename(tempResults, outFile)
 	
 	print "done in " + str(endTime) + " seconds"
+	timeFile = open(filename + ".time", "w")
+	timeFile.write("Time elapsed: " + str(endTime))
+	timeFile.close()
 	
 	print "\nTESTING SOLN\n"
 	solnList = []
@@ -113,9 +121,5 @@ if __name__ == '__main__':
 		solnList.append(int(line))
 	visitCityPath(fullMap, solnList)
 	
+	cleanup()
 	
-	##Cleanup
-	if(os.path.isfile(TEMP1)):
-		os.remove(TEMP1)
-	if(os.path.isfile(TEMP2)):
-		os.remove(TEMP2)	

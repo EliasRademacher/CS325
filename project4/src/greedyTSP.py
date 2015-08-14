@@ -11,6 +11,8 @@ def singleDataTransfer(minCost, route, q):
 	print "minCost: " + str(minCost)
 	for e in route:
 		out.write(str(e) + "\n")
+	if(not q.empty()):
+		q.get()
 	q.put(TEMP1)
 	out.close
 	
@@ -26,7 +28,8 @@ def multiDataTransfer(alternator, minCost, route, q):
 	print "minCost: " + str(minCost)
 	for e in route:
 		out.write(str(e) + "\n")
-	
+	if(not q.empty()):
+		q.get()
 	q.put(filename)
 	out.close
 	return False if alternator else True
@@ -51,7 +54,8 @@ def greedyTsp(cities, numCities, q):
 					alternator = multiDataTransfer(alternator, minCost, shortestRoute, q)
 	
 	##If there is time, just pass data once
-	singleDataTransfer(minCost, shortestRoute, q)
+	if(numCities <= settings.MAX_TIMED_CITIES):
+		singleDataTransfer(minCost, shortestRoute, q)
 ##END 'def greedyTsp()'
 
 
@@ -78,7 +82,7 @@ def findRoute(startCity, numCities, cities, minCost):
 		#prematurely kill if cost is too high
 		if(totalLen > minCost):
 			return None
-		
+
 		currentCity = closestCityId
 		route.append((currentCity))
 		citiesToCheck.remove(currentCity)
@@ -87,7 +91,7 @@ def findRoute(startCity, numCities, cities, minCost):
 	##Route back to start node	
 	endLen = getLength(cities, startCity, currentCity)
 	totalLen += endLen
-	##Her code is stupid and doesn't put the start node at the end
+	##Her code doesn't put the start node at the end
 	#route.append((startCity))
 		
 	return route, totalLen
