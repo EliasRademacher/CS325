@@ -82,7 +82,7 @@ def findRoute(startCity, numCities, cities, minCost):
 		#prematurely kill if cost is too high
 		if(totalLen > minCost):
 			return None
-		
+
 		currentCity = closestCityId
 		route.append((currentCity))
 		citiesToCheck.remove(currentCity)
